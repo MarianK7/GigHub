@@ -1,9 +1,8 @@
 <h1>{{$heading}}</h1>
 <p>Here are all current listings.</p>
 
-@unless (count($listings))
+@unless (count($listings) == 0)
     
-@endunless
 @foreach ($listings as $listing)
     <h2>
         {{$listing['title']}}
