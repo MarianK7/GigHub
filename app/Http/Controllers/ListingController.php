@@ -30,10 +30,10 @@ class ListingController extends Controller
     }
 
     // Store a new listing
-    public function store()
+    public function store(Request $request)
     {
         // Validate the form
-        $attributes = request()->validate([
+        $attributes = $request->validate([
             'title' => 'required|min:3|max:255',
             'company' => 'required|min:3|max:255',
             'location' => 'required|min:3|max:255',
@@ -42,6 +42,10 @@ class ListingController extends Controller
             'tags' => 'required',
             'description' => 'required|min:3|max:1000'
         ]);
+
+        if ($request->hasFile('logo')) {
+            $attributes['logo'] = $request->logo->store('uploads', 'public');
+        }
 
         // Create the listing
         Listing::create($attributes);
